@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
+import RoomScreen from "./containers/RoomScreen.js";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SettingsScreen from "./containers/SettingsScreen";
@@ -96,6 +97,22 @@ export default function App() {
                         }}
                       >
                         {() => <HomeScreen />}
+                      </Stack.Screen>
+                      <Stack.Screen
+                        name="Room"
+                        options={{
+                          title: "Room",
+                          headerStyle: {
+                            backgroundColor: "#FF5B60"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontWeight: "400",
+                            fontSize: 25
+                          }
+                        }}
+                      >
+                        {() => <RoomScreen />}
                       </Stack.Screen>
 
                       <Stack.Screen

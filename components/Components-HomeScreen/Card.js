@@ -1,9 +1,20 @@
 import React from "react";
-import { Image, StyleSheet, FlatList, Text, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+
+import { useNavigation } from "@react-navigation/core";
 
 import CardIcon from "./CardIcon.js";
 
 const Card = props => {
+  const navigation = useNavigation();
+
   return (
     <FlatList
       // On récupère la data en props
@@ -15,10 +26,16 @@ const Card = props => {
       renderItem={({ item }) => {
         return (
           // View contenant l'ensemble de la card
-          <View style={styles.card}>
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => {
+              navigation.navigate("Room", { roomId: item._id });
+            }}
+          >
             {/* View contenant l'image */}
             <View>
               <Image style={styles.image} source={{ uri: item.photos[0] }} />
+              <Text style={styles.price}>{item.price} €</Text>
             </View>
 
             {/* View contenant les informations et profile pictures en dessous de l'image */}
@@ -45,7 +62,7 @@ const Card = props => {
                 />
               </View>
             </View>
-          </View>
+          </TouchableOpacity>
         );
       }}
     />
@@ -63,6 +80,16 @@ const styles = StyleSheet.create({
     width: 370,
     height: 218,
     resizeMode: "cover"
+  },
+
+  price: {
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+    padding: 5,
+    backgroundColor: "black",
+    color: "white",
+    fontWeight: "600"
   },
 
   announceInfos: {

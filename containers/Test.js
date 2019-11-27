@@ -87,3 +87,22 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
+
+const array = [];
+const photos = room.photos;
+
+for (let i = 0; i < photos.length; i++) {
+  array.push(
+    <Image key={i} style={styles.roomImage} source={{ uri: photo }} />
+  );
+}
+
+{
+  pictures.map((element, index) => {
+    tab = [];
+    tab.push(
+      <Image key={index} style={styles.roomImage} source={{ uri: element }} />
+    );
+    return <Swiper horizontal={true}>{tab}</Swiper>;
+  });
+}

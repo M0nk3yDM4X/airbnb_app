@@ -23,9 +23,8 @@ const SignInScreen = ({ setToken }) => {
           password: password
         }
       );
-      const userToken = "secret-token";
+      const userToken = response.data.token;
       setToken(userToken);
-      console.log(userToken);
     } catch (error) {
       alert("Mauvais mot de passe");
     }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/core";
-import { Button, Image, StyleSheet, FlatList, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import Card from "../components/Components-HomeScreen/Card.js";
 
 const HomeScreen = () => {
