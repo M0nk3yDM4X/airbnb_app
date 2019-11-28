@@ -5,10 +5,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "./containers/HomeScreen";
+import MapListScreen from "./containers/MapListScreen.js";
 import RoomScreen from "./containers/RoomScreen.js";
 import ProfileScreen from "./containers/ProfileScreen";
 import SignInScreen from "./containers/SignInScreen";
 import SettingsScreen from "./containers/SettingsScreen";
+import SignUpScreen from "./containers/SignUpSreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -50,9 +52,14 @@ export default function App() {
           <Stack.Screen name="Splash" component={() => null} />
         ) : userToken === null ? (
           // No token found, user isn't signed in
-          <Stack.Screen name="SignIn" options={{ header: () => null }}>
-            {() => <SignInScreen setToken={setToken} />}
-          </Stack.Screen>
+          <>
+            <Stack.Screen name="SignIn" options={{ header: () => null }}>
+              {() => <SignInScreen setToken={setToken} />}
+            </Stack.Screen>
+            <Stack.Screen name="SignUp" options={{ header: () => null }}>
+              {() => <SignUpScreen setToken={setToken} />}
+            </Stack.Screen>
+          </>
         ) : (
           // User is signed in
           <Stack.Screen name="Tab" options={{ header: () => null }}>
@@ -64,6 +71,8 @@ export default function App() {
                       let iconName;
                       if (route.name === "Settings") {
                         iconName = `ios-options`;
+                      } else if (route.name === "MapList") {
+                        iconName = "ios-map";
                       } else {
                         iconName = `ios-home`;
                       }
@@ -120,6 +129,18 @@ export default function App() {
                         options={{ title: "User Profile" }}
                       >
                         {() => <ProfileScreen />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+                <Tab.Screen name="MapList">
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="MapList"
+                        options={{ title: "MapList" }}
+                      >
+                        {() => <MapListScreen />}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}

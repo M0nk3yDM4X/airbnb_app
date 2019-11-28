@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
+import { useNavigation } from "@react-navigation/core";
 
 const SignInScreen = ({ setToken }) => {
   const [email, setEmail] = useState("");
@@ -29,6 +30,8 @@ const SignInScreen = ({ setToken }) => {
       alert("Mauvais mot de passe");
     }
   };
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -59,6 +62,16 @@ const SignInScreen = ({ setToken }) => {
       </View>
       <TouchableOpacity style={styles.buttonContainer} onPress={req}>
         <Text style={styles.button}>Sign in</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate("SignUp");
+        }}
+        style={{ marginTop: 10 }}
+      >
+        <Text style={{ textDecorationLine: "underline" }}>
+          Don't have an account ? Click here !
+        </Text>
       </TouchableOpacity>
     </View>
   );

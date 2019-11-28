@@ -28,7 +28,9 @@ const Card = props => {
           // View contenant l'ensemble de la card
           <TouchableOpacity
             style={styles.card}
+            // onPress qui nous dirige vers le screen room
             onPress={() => {
+              // Transmission de l'id de la room, qui est donc nommée roomId
               navigation.navigate("Room", { roomId: item._id });
             }}
           >
@@ -49,6 +51,7 @@ const Card = props => {
 
                 {/* View comprenant ratings et nombre de reviews */}
                 <View style={styles.advice}>
+                  {/* Composant qui gère l'affichage des étoiles en fonction de la moyenne de reviews */}
                   <CardIcon item={item.ratingValue} />
                   <Text style={styles.reviews}>{item.reviews} Reviews</Text>
                 </View>
