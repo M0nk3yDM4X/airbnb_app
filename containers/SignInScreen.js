@@ -11,21 +11,25 @@ import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/core";
 
-const SignInScreen = ({ setToken }) => {
+const SignInScreen = ({ setToken, setId }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const req = async () => {
     try {
       const response = await axios.post(
-        "https://airbnb-api.now.sh/api/user/log_in",
+        "https://airbnb-api.herokuapp.com/api/user/log_in",
         {
           email: email,
           password: password
         }
       );
+      const userId = response.data._id;
+      setId(userId);
       const userToken = response.data.token;
       setToken(userToken);
+
+      // const userId = response.data._id
     } catch (error) {
       alert("Mauvais mot de passe");
     }

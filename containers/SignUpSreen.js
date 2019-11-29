@@ -12,7 +12,7 @@ const SignUpScreen = props => {
   const req = async () => {
     try {
       const response = await axios.post(
-        "https://airbnb-api.now.sh/api/user/sign_up",
+        "https://airbnb-api.herokuapp.com/api/user/sign_up",
         {
           email: email,
           username: username,
@@ -21,6 +21,9 @@ const SignUpScreen = props => {
       );
       const userToken = response.data.token;
       props.setToken(userToken);
+
+      const userId = response.data._id;
+      props.setId(userId);
     } catch (error) {
       alert(error);
     }
@@ -29,7 +32,7 @@ const SignUpScreen = props => {
   return (
     <View style={styles.container}>
       <View>
-        <Text>email adress</Text>
+        <Text>email address</Text>
         <TextInput
           style={{ backgroundColor: "grey" }}
           value={email}

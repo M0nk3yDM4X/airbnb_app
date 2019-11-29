@@ -18,6 +18,7 @@ const Stack = createStackNavigator();
 export default function App() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [userToken, setUserToken] = React.useState(null);
+  const [userId, setUserId] = React.useState(null);
 
   const setToken = async token => {
     if (token) {
@@ -25,8 +26,16 @@ export default function App() {
     } else {
       AsyncStorage.removeItem("userToken");
     }
-
     setUserToken(token);
+  };
+
+  const setId = async id => {
+    if (id) {
+      AsyncStorage.setItem("userId", id);
+    } else {
+      AsyncStorage.removeItem("userId");
+    }
+    setUserId(id);
   };
 
   React.useEffect(() => {
@@ -34,11 +43,12 @@ export default function App() {
     const bootstrapAsync = async () => {
       // We should also handle error for production apps
       const userToken = await AsyncStorage.getItem("userToken");
-
+      const userId = await AsyncStorage.getItem("userId");
       // This will switch to the App screen or Auth screen and this loading
       // screen will be unmounted and thrown away.
       setIsLoading(false);
       setUserToken(userToken);
+      setUserId(userId);
     };
 
     bootstrapAsync();
@@ -54,10 +64,10 @@ export default function App() {
           // No token found, user isn't signed in
           <>
             <Stack.Screen name="SignIn" options={{ header: () => null }}>
-              {() => <SignInScreen setToken={setToken} />}
+              {() => <SignInScreen setToken={setToken} setId={setId} />}
             </Stack.Screen>
             <Stack.Screen name="SignUp" options={{ header: () => null }}>
-              {() => <SignUpScreen setToken={setToken} />}
+              {() => <SignUpScreen setToken={setToken} setId={setId} />}
             </Stack.Screen>
           </>
         ) : (
@@ -71,6 +81,8 @@ export default function App() {
                       let iconName;
                       if (route.name === "Settings") {
                         iconName = `ios-options`;
+                      } else if (route.name === "Profile") {
+                        iconName = "md-person";
                       } else if (route.name === "MapList") {
                         iconName = "ios-map";
                       } else {
@@ -123,13 +135,6 @@ export default function App() {
                       >
                         {() => <RoomScreen />}
                       </Stack.Screen>
-
-                      <Stack.Screen
-                        name="Profile"
-                        options={{ title: "User Profile" }}
-                      >
-                        {() => <ProfileScreen />}
-                      </Stack.Screen>
                     </Stack.Navigator>
                   )}
                 </Tab.Screen>
@@ -138,9 +143,46 @@ export default function App() {
                     <Stack.Navigator>
                       <Stack.Screen
                         name="MapList"
-                        options={{ title: "MapList" }}
+                        options={{
+                          title: "MapList",
+                          headerStyle: {
+                            backgroundColor: "#FF5B60"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontWeight: "400",
+                            fontSize: 25
+                          }
+                        }}
                       >
                         {() => <MapListScreen />}
+                      </Stack.Screen>
+                    </Stack.Navigator>
+                  )}
+                </Tab.Screen>
+                <Tab.Screen name="Profile">
+                  {() => (
+                    <Stack.Navigator>
+                      <Stack.Screen
+                        name="Profile"
+                        options={{
+                          title: "Profile",
+                          headerStyle: {
+                            backgroundColor: "#FF5B60"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontWeight: "400",
+                            fontSize: 25
+                          }
+                        }}
+                      >
+                        {() => (
+                          <ProfileScreen
+                            userId={userId}
+                            userToken={userToken}
+                          />
+                        )}
                       </Stack.Screen>
                     </Stack.Navigator>
                   )}
@@ -150,7 +192,17 @@ export default function App() {
                     <Stack.Navigator>
                       <Stack.Screen
                         name="Settings"
-                        options={{ title: "Settings" }}
+                        options={{
+                          title: "Settings",
+                          headerStyle: {
+                            backgroundColor: "#FF5B60"
+                          },
+                          headerTitleStyle: {
+                            color: "white",
+                            fontWeight: "400",
+                            fontSize: 25
+                          }
+                        }}
                       >
                         {() => <SettingsScreen setToken={setToken} />}
                       </Stack.Screen>

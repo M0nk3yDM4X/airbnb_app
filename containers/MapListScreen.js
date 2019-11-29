@@ -11,7 +11,7 @@ const MapListScreen = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        "https://airbnb-api.now.sh/api/room?city=paris"
+        "https://airbnb-api.herokuapp.com/api/room?city=paris"
       );
       setProducts(response.data.rooms);
       setIsLoading(false);
